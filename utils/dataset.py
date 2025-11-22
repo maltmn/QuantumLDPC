@@ -17,6 +17,9 @@ def pauli_to_XZ(errors):
 def syndrome(H, e):
   return (H @ e.T) % 2
 
+'''
+Usage:
+
 # Load Hx and Hz
 Hx = np.random.randint(0,2,(10,20))
 Hz = np.random.randint(0,2,(10,20))
@@ -30,3 +33,4 @@ eX, eZ = pauli_to_XZ(errors)
 # Compute syndromes
 sX = syndrome(Hx, eZ)
 sZ = syndrome(Hz, eX)
+'''
