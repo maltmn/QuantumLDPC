@@ -1,1 +1,0 @@
-Astra Graph Neural Network

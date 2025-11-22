@@ -1,7 +1,9 @@
 import numpy as np
 
+from panqec.codes import surface_2d
+
 def generate_errors(num_samples, n_qubits, pX, pY, pZ):
-# PauliErrorModel(0.34, 0.32, 0.34)
+# PauliErrorModel(pX, pY, pZ)
   errors = np.random.choice(
     [0,1,2,3], # I,X,Y,Z
     size = (num_samples, n_qubits),
@@ -17,24 +19,33 @@ def pauli_to_XZ(errors):
 def syndrome(H, e):
   return (H @ e.T) % 2
 
-Hx = np.random.randint(0,2,(10,20))
-Hz = np.random.randint(0,2,(10,20))
+code = surface_2d.RotatedPlanar2DCode(3)
 
+Hx = code.Hx.toarray()
+Hz = code.Hz.toarray()
+
+print(code.Hx.shape)
+print(code.Hz.shape)
 
 '''
-Usage:
+ Hx = np.array([
+  [1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
+  [1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0],
+  [1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1],
+  [0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+  [1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1],
+  [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0]
+], dtype=np.int64)
 
-# Load Hx and Hz
-Hx = np.random.randint(0,2,(10,20))
-Hz = np.random.randint(0,2,(10,20))
-
-# Generate Pauli Errors
-errors = generate_errors(500, 20, 0.34, 0.32, 0.34)
-
-# Convert IXYZ to eX,eZ channels
-eX, eZ = pauli_to_XZ(errors)
-
-# Compute syndromes
-sX = syndrome(Hx, eZ)
-sZ = syndrome(Hz, eX)
+Hz = np.array([
+  [0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1],
+  [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+  [0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0],
+  [0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0],
+  [1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0],
+  [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]
+], dtype=np.int64)
 '''
+
+assert np.all((Hx @ Hz.T) % 2 == 0)
+
