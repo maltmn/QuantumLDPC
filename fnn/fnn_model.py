@@ -7,7 +7,7 @@ class FNNDecoder(nn.Module):
     self.net = nn.Sequential(
       nn.Linear(syndrome_dim, 256), # input
       nn.ReLU(),  # activation
-      nn.Linear(256, n_qubits) # output
+      nn.Linear(256, 2*n_qubits) # output both X and Z
     )
 
   def forward(self, s):
