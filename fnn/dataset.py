@@ -1,6 +1,6 @@
 import numpy as np
 
-def generate_errors(num_samples, n_qubits, pX, pY, pZ) 
+def generate_errors(num_samples, n_qubits, pX, pY, pZ):
 # PauliErrorModel(0.34, 0.32, 0.34)
   errors = np.random.choice(
     [0,1,2,3], # I,X,Y,Z
@@ -16,6 +16,10 @@ def pauli_to_XZ(errors):
 
 def syndrome(H, e):
   return (H @ e.T) % 2
+
+Hx = np.random.randint(0,2,(10,20))
+Hz = np.random.randint(0,2,(10,20))
+
 
 '''
 Usage:

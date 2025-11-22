@@ -4,6 +4,9 @@ import torch.nn as nn
 class FNNDecoder(nn.Module):
   def __init__(self, syndrome_dim, n_qubits):
     super().__init__()
+
+    self.n_qubits = n_qubits
+    
     self.net = nn.Sequential(
       nn.Linear(syndrome_dim, 256), # input
       nn.ReLU(),  # activation
