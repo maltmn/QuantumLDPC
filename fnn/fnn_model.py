@@ -11,4 +11,7 @@ class FNNDecoder(nn.Module):
     )
 
   def forward(self, s):
-    return self.net(s)
+    logits = self.net(s)
+    eX_logits = logits[:, :self.n_qubits]
+    eZ_logits = logits[:, self.n_qubits:]
+    return eX_logits, eZ_logits
