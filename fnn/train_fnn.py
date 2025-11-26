@@ -20,10 +20,6 @@ def main():
   # Convert IXYZ to eX,eZ channels
   eX, eZ = pauli_to_XZ(errors)
 
-  #error[sample i, qubit j]
-    #eX[i,j]=1 X component
-    #eZ[i,j]=1 Z component
-
   # Compute syndromes
   sX = syndrome(Hx, eZ).T
   sZ = syndrome(Hz, eX).T
@@ -62,7 +58,7 @@ def main():
   criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight) # Loss (prediction score)
   optimizer = optim.Adam(model.parameters(), lr=1e-3) # update weights (gradient descent)
 
-  epochs = 100
+  epochs = 50
 
   for epoch in range(epochs):
     total_loss = 0
@@ -127,6 +123,8 @@ def main():
 
   print("\nPred Z errors:", eZ_hat_single[0].int().tolist())
   print("True Z errors:", eZ_single[0].tolist())
+
+  return model
 
 
 
